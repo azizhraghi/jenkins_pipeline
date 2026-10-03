@@ -1,11 +1,20 @@
 pipeline {
     agent any
-
+    triggers {
+        pollSCM('* * * * *')
+    }
     stages {
-        stage('Hello') {
+        stage('Checkout GIT') {
             steps {
-                echo 'Hello World'
-                
+                echo 'Pulling...'
+                git branch: 'main',
+                    url: 'https://github.com/azizhraghi/jenkins_pipeline.git'
             }
         }
-}}
+        stage('Show Date') {
+            steps {
+                sh 'date'
+            }
+        }
+    }
+}
